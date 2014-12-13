@@ -1,0 +1,18 @@
+class Login:
+
+    login_form = web.form.Form( web.form.Textbox('username'),
+        web.form.Password('password'),
+        web.form.Button('Login'),
+        )
+
+    def GET(self):
+        f = self.login_form()
+        return render.login(f)
+
+    def POST(self):
+        # Validation
+        if not self.login_form.validates():
+            print "it didn't validate!"
+
+        session.logged_in = True
+        raise web.seeother('/')

@@ -1,0 +1,105 @@
+""" Basic todo list using webpy 0.3 """
+import web
+import model
+web.config.debug = False
+global context
+### Url mappings
+
+urls = (
+    '/', 'Login',
+    '/signup', 'Signup',
+    '/index', 'Index',
+    '/del/(\d+)', 'Delete'
+)
+
+
+### Templates
+render = web.template.render('templates', base='base')
+app = web.application(urls, locals())
+session = web.session.Session(app, web.session.DiskStore('sessions'))
+
+
+class Login:
+
+    def GET(self):
+        return render.login()
+        
+    def POST(self):
+
+        i=web.input()
+        uname=i.uname
+        password=i.password
+        """Validate username and password"""
+        chk=model.get_user(uname,password)
+        if chk:
+           session.loggedin=True
+           session.username=uname
+           print "session working fine"+ session.username
+           raise web.seeother('/index')
+        else:
+           print "Invalid"
+
+class Signup:
+    
+    def GET(self):
+        return render.signup()
+
+    def POST(self):        
+        
+        i=web.input()
+        fname=i.fname
+        lname=i.lname
+        uname=i.username
+        password=i.pwd
+        """Insert user details"""
+        chk=model.put_user(fname,lname,uname,password)
+        if chk:
+          print "Signup Successfull!"
+          raise web.seeother('/')	
+        else:
+          print "Signup not successfull"
+          return render.signup()
+
+class Index:
+    form = web.form.Form(
+        web.form.Textbox('title', web.form.notnull, 
+            description="I need to:"),
+        web.form.Button('Add todo'),
+    )
+    def GET(self):
+        """ Show page """
+        todos = model.get_todos()
+        form = self.form()
+        usrname=session.username
+        print "session working fine"+usrname
+        return render.index(todos, form, usrname)
+
+    def POST(self):
+        """ Add new entry """
+        form = self.form()
+        usrname=session.username
+        print "session working fine"+usrname
+        if not form.validates():
+            todos = model.get_todos()
+            return render.index(todos, form, usrname)
+        model.new_todo(form.d.title)
+        raise web.seeother('/')
+
+
+class Delete:
+
+    def POST(self, id):
+        """ Delete based on ID """
+        id = int(id)
+        model.del_todo(id)
+        raise web.seeother('/')
+
+app = web.application(urls, globals())
+
+if web.config.get('_session') is None:
+    session = web.session.Session(app, web.session.DiskStore('sessions'), {'username':'','loggedin':False})
+    web.config._session = session
+else:
+    session = web.config._session
+if __name__ == '__main__':
+    app.run()

@@ -1,0 +1,174 @@
+$def with ()
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Sign In</title>
+<style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        background:url("http://bigdealsasap.com/DesktopModules/TTNVideos/Videos%20and%20Backgrounds/USHBB%20Backgrounds/NotepadBG.png");
+        background-repeat: no-repeat;
+        background-size: 117% 110%;
+        background-position: center center;
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        width:300px;
+        margin: 0 auto;
+        text-align:center;
+        background-color: #fff;
+	border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+        width: 250px;
+        float:auto;
+        
+      }
+      .button {
+   border-top: 1px solid #96d1f8;
+   background: #65a9d7;
+   background: -webkit-gradient(linear, left top, left bottom, from(#100c94), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #100c94, #65a9d7);
+   background: -moz-linear-gradient(top, #100c94, #65a9d7);
+   background: -ms-linear-gradient(top, #100c94, #65a9d7);
+   background: -o-linear-gradient(top, #100c94, #65a9d7);
+   padding: 5px 10px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 14px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+   }
+.button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
+</style>
+<script type="text/javascript">
+function isUsername()
+{
+  var usernam=document.getElementById('uname').value;
+  var usr=document.getElementById('usr');
+  if(usernam!="")
+  {
+	if(usernam.match('^[0-9a-zA-Z._]+')==false)
+	{
+		usr.innerHTML="<font color='red'> Invalid Username </font>";
+		return false;
+	}
+	
+   	else if(usernam.length<5 || usernam.length>20)
+   	{
+		usr.innerHTML="<font color='red'> Username must be between 5-20 characters </font>";
+		return false;
+   	}
+   	
+	else
+   	{
+		usr.innerHTML="&#10004";
+		return true;
+   	} 
+  }
+  else if(usernam.length==0)
+   {
+	usr.innerHTML="<font color='red'>Username is must </font>";
+	return false;
+   }
+}
+function chkpassword()
+{
+   var pawd1=document.getElementById('password').value;
+   var palt=document.getElementById('pwd');
+ if(pawd1.length==0)
+  {
+    palt.innerHTML="<font color='red'> Password is must</font>";
+    return false;
+  }
+  else if(pawd1.length<6)
+  {
+	palt.innerHTML="<font color='red'> Password must be of greater than 5 characters</font>";
+        return false;
+  }
+  else if(pawd1.length>12)
+  {
+	palt.innerHTML="<font color='red'> Password must be of less than 13 characters</font>";
+        return false;
+  }
+ else
+  {
+    palt.innerHTML="&#10004";
+    return true;
+  }
+
+}
+function chkform()
+ {
+	if(isUsername())
+	{
+		if(chkpassword())
+		{
+	 		return true;
+                }
+ 		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<div class="container">
+
+      <form class="form-signin" action="" method="post" align="center">
+        <h2 class="form-signin-heading">To Do List</h2>
+        <h3 class="form-signin-heading">Please sign in</h3>
+        <input type="text" class="input-block-level" name="uname" id="uname" placeholder="Username" onBlur="isUsername()"><span id="usr" style="float:right;"></span>
+        <input type="password" class="input-block-level" name="password" id="password" placeholder="Password" onBlur="chkpassword()"><span id="pwd" style="float:right;"></span><br>
+        <label class="checkbox" style="float:auto;">
+          <input type="checkbox" value="remember-me" name="rememberme" > Remember me
+        </label>
+        <button class="button" type="submit" onclick="return chkform()">Sign in</button>
+        <h3 class="form-signin-heading">Not Registered yet?</h3>
+        <a href="signup">Sign Up</a>
+      </form>
+    </div>
+</body>
+</html>
+
