@@ -1,6 +1,7 @@
 """ Basic todo list using webpy 0.3 """
 import web
 import model
+import hashlib
 web.config.debug = False
 global context
 ### Url mappings
@@ -47,18 +48,20 @@ class Signup:
     def POST(self):        
         
         i=web.input()
-        fname=i.fname
-        lname=i.lname
         uname=i.uname
-        password=i.password
+        password=hashlib.md5(i.password).hexdigest()
         """Insert user details"""
-        chk=model.put_user(fname,lname,uname,password)
-        if chk:
-          print "Signup Successfull!"
-          raise web.seeother('/')	
+        userexists=model.if_user_exists(uname)
+        if userexists:
+          print "User already exists"
         else:
-          print "Signup not successfull"
-          return render.signup()
+           chk=model.put_user(uname,password)
+           if chk:
+              print "Signup Successfull!"
+              raise web.seeother('/')	
+           else:
+              print "Signup not successfull"
+              return render.signup()
 
 class Index:
     form = web.form.Form(

@@ -7,11 +7,20 @@ def get_user(text1,text2):
     else:
       return False
 
-def put_user(text1,text2,text3,text4):
-    if db.insert('user', fname=text1, lname=text2, username=text3, password=text4):
+def put_user(text1,text2):
+    
+    if db.insert('user', username=text1, password=text2):
       return True
     else:
       return False
+
+def if_user_exists(text1):
+
+    results = db.query("select count(*) from user where username=$uname", vars={'uname':text1})
+    if results>0:
+       return True
+    else:
+       return False
 
 def get_todos():
     return db.select('todo', order='id')
