@@ -85,7 +85,7 @@ function isUsername()
   {
 	if(usernam.match('^[0-9a-zA-Z._]+')==false)
 	{
-		usr.innerHTML="<font color='red'> Invalid Username </font>";
+		usr.innerHTML="<font color='red'> Username cannot have special characters. </font>";
 		return false;
 	}
 	
@@ -103,7 +103,7 @@ function isUsername()
   }
   else if(usernam.length==0)
    {
-	usr.innerHTML="<font color='red'>Username is must </font>";
+	usr.innerHTML="<font color='red'>Please enter a Username </font>";
 	return false;
    }
 }

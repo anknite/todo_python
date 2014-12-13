@@ -49,8 +49,8 @@ class Signup:
         i=web.input()
         fname=i.fname
         lname=i.lname
-        uname=i.username
-        password=i.pwd
+        uname=i.uname
+        password=i.password
         """Insert user details"""
         chk=model.put_user(fname,lname,uname,password)
         if chk:
