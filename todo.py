@@ -1,7 +1,7 @@
 """ Basic todo list using webpy 0.3 """
 import web
 import model
-import hashlib
+
 web.config.debug = False
 global context
 ### Url mappings
@@ -9,8 +9,10 @@ global context
 urls = (
     '/', 'Login',
     '/signup', 'Signup',
+    '/signup_success','',
     '/index', 'Index',
-    '/del/(\d+)', 'Delete'
+    '/del/(\d+)', 'Delete',
+    '/logout','Logout'
 )
 
 
@@ -26,7 +28,6 @@ class Login:
         return render.login()
         
     def POST(self):
-
         i=web.input()
         uname=i.uname
         password=i.password
@@ -46,48 +47,34 @@ class Signup:
         return render.signup()
 
     def POST(self):        
-        
         i=web.input()
         uname=i.uname
-        password=hashlib.md5(i.password).hexdigest()
+        password=i.password
         """Insert user details"""
         userexists=model.if_user_exists(uname)
-        if userexists:
-          print "User already exists"
-        else:
-           chk=model.put_user(uname,password)
-           if chk:
-              print "Signup Successfull!"
-              raise web.seeother('/')	
-           else:
-              print "Signup not successfull"
-              return render.signup()
+        chk=model.put_user(uname,password)
+        if chk:
+          return render.signup_success()
 
 class Index:
-    form = web.form.Form(
-        web.form.Textbox('title', web.form.notnull, 
-            description="I need to:"),
-        web.form.Button('Add todo'),
-    )
     def GET(self):
         """ Show page """
         todos = model.get_todos()
-        form = self.form()
         usrname=session.username
+        session.loggedin=True
         print "session working fine"+usrname
-        return render.index(todos, form, usrname)
+        return render.index(todos, usrname)
 
     def POST(self):
         """ Add new entry """
-        form = self.form()
+        i=web.input()
+        newtodo=i.addmore
         usrname=session.username
         print "session working fine"+usrname
-        if not form.validates():
-            todos = model.get_todos()
-            return render.index(todos, form, usrname)
-        model.new_todo(form.d.title)
-        raise web.seeother('/')
-
+        todos = model.get_todos()
+        render.index(todos, usrname)
+        model.new_todo(newtodo,usrname)
+        raise web.seeother('/index')
 
 class Delete:
 
@@ -95,6 +82,12 @@ class Delete:
         """ Delete based on ID """
         id = int(id)
         model.del_todo(id)
+        raise web.seeother('/index')
+
+class Logout:
+   def GET(self):
+        session.loggedin = False
+        session.kill()
         raise web.seeother('/')
 
 app = web.application(urls, globals())

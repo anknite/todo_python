@@ -1,22 +1,114 @@
-$def with (todos, form, usrname)
+$def with (todos, usrname)
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>ToDo List</title>
+<style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+     .container{
+       background-image:url("http://bigdealsasap.com/DesktopModules/TTNVideos/Videos%20and%20Backgrounds/USHBB%20Backgrounds/NotepadBG.png");
+        background-repeat: no-repeat;
+        background-size: 117% 110%;
+        background-position: center center;
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        width:300px;
+        margin: 0 auto;
+        text-align:center;
+        background-color: #fff;
+	border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       }
+      /*.form-signin {
+        background:url("http://bigdealsasap.com/DesktopModules/TTNVideos/Videos%20and%20Backgrounds/USHBB%20Backgrounds/NotepadBG.png");
+        background-repeat: no-repeat;
+        background-size: 117% 110%;
+        background-position: center center;
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        width:300px;
+        margin: 0 auto;
+        text-align:center;
+        background-color: #fff;
+	border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       
+      }*/
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+        float:left;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+        width: 250px;
+        float:left;
+        
+      }
+      .button {
+       background-image: url("https://cdn2.iconfinder.com/data/icons/toolbar-icons/512/Cancel-128.png");
+       height: 25px;
+       width: 25px;
+       background-size: cover;
+       border: 50px;
+       margin-left: 100px;
+       float:right;
+     }
+
+</style>
+<script type="text/javascript">
+function clearHistory()
+{
+     var backlen = history.length;
+     history.go(-backlen);
+     window.location.href = "/"
+}
+</script>
+</head>
+<body>
+<div class="container">
 <p>You are logged in as $usrname</p>
+<a href="/logout" style="float:right;">logout</a>
+
+<h3>Things to do: </h3>
 <table>
-    <tr>
-        <th>What to do ?</th>
-        <th></th>
-    </tr>
-$for todo in todos:
-    <tr>
-        <td>$todo.title</td>
-        <td>
-            <form action="/del/$todo.id" method="post">
-                <input type="submit" value="Delete"/>
-            </form>
+    $for todo in todos:
+	<tr>
+	<td>
+        <form class="form-signin" action="/del/$todo.id" method="post">
+        <input type="checkbox" id="done" name="done" />$todo.title
+        <button class="button" type="submit"></button>
+        </form>
         </td>
-    </tr>    
-</table>  
+	</tr>
 
-<form action="" method="post">
-$:form.render()
-</form>
-
+<tr> 
+	<td>     
+	<form class="form-signin" action="/index" method="post">
+	<input type="text" name="addmore" placeholder="I need to">
+	<button type="submit">Add Todo</button>
+	</form>
+	</td>
+</tr>
+</table>
+</div>
+</body>
+</html>
