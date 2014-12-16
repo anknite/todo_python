@@ -55,9 +55,12 @@ class Signup:
         password=i.password
         """Insert user details"""
         userexists=model.if_user_exists(uname)
-        chk=model.put_user(uname,password)
-        if chk:
-          return render.signup_success()
+        if userexists:
+           return render.signup_fail()
+        else:
+           chk=model.put_user(uname,password)
+           if chk:
+              return render.signup_success()
 
 class Index:
     def GET(self):
@@ -89,7 +92,12 @@ class Delete:
 
 class Logout:
    def GET(self):
-       session.loggedin = False
+       session.loggedin=False
+       session.kill()
+       web.seeother('/')
+
+   def POST(self):
+       session.loggedin=False
        session.kill()
        return render.login()
    

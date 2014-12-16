@@ -1,6 +1,9 @@
 $def with ()
 <html>
 <head>
+<META Http-Equiv="Cache-Control" Content="no-cache"/>
+<META Http-Equiv="Pragma" Content="no-cache"/>
+<META Http-Equiv="Expires" Content="0"/>
 <title>Sign Up</title>
 <script type="text/javascript">
 function isUsername()
@@ -9,15 +12,15 @@ function isUsername()
   var usr=document.getElementById('usr');
   if(usernam!="")
   {
- 	if(usernam.match('^[0-9a-zA-Z._]+')==false)
+ 	if(!usernam.match('^[0-9a-zA-Z._]+'))
 	{
-		usr.innerHTML="<font color='red'> Username cannot have special characters. </font>";
+		usr.innerHTML="Username cannot have special characters!";
 		return false;
 	}
 	
    	else if(usernam.length<5 || usernam.length>20)
    	{
-		usr.innerHTML="<font color='red'> Username must be between 5-20 characters </font>";
+		usr.innerHTML="Username must be between 5-20 characters!";
 		return false;
    	}
    	
@@ -29,7 +32,7 @@ function isUsername()
   }
   else if(usernam.length==0)
    {
-	usr.innerHTML="<font color='red'>Please enter a Username </font>";
+	usr.innerHTML="Please enter a Username!";
 	return false;
    }
 }
@@ -40,12 +43,12 @@ function chkpassword()
    var palt=document.getElementById('pwd');
  if(pawd1.length==0)
   {
-    palt.innerHTML="<font color='red'> Password is must</font>";
+    palt.innerHTML="Please enter the password!";
     return false;
   }
   else if(pawd1.length<6 || pawd1.length>12)
   {
-	palt.innerHTML="<font color='red'> Password must be between 6-12 characters</font>";
+	palt.innerHTML="Password must be between 6-12 characters!";
         return false;
   }
  else
@@ -63,7 +66,12 @@ function confpassword()
   
   if (pawd!=rpawd)
   {
-     pass.innerHTML="<font color='red'> Passwords don't match</font>";
+     pass.innerHTML="Passwords don't match!";
+     return false;
+  }
+  else if(rpawd=="")
+  {
+     pass.innerHTML="Please re-enter the password!";
      return false;
   }
   else
@@ -106,9 +114,9 @@ function chkform()
       <form class="form-signin" action="" method="post" align="center">
         <h2 class="form-signin-heading">To Do List</h2>
         <h3 class="form-signin-heading">Please SignUp</h3>
-        <input type="text" class="input-block-level" name="uname" placeholder="Username" id="uname" onBlur="isUsername()"><span id="usr" style="float:right;"></span>
-        <input type="password" class="input-block-level" name="password" placeholder="Password" id="pass" onBlur="chkpassword()"><span id="pwd" style="float:right;"></span>
-        <input type="password" class="input-block-level" placeholder="Re-enter Password" id="rpass" onBlur="confpassword()"><span id="rpwd" style="float:right;"></span>
+        <input type="text" class="input-block-level" name="uname" placeholder="Username" id="uname" onBlur="isUsername()"><span id="usr" class="error"></span>
+        <input type="password" class="input-block-level" name="password" placeholder="Password" id="pass" onBlur="chkpassword()"><span id="pwd" class="error"></span>
+        <input type="password" class="input-block-level" placeholder="Re-enter Password" id="rpass" onBlur="confpassword()"><span id="rpwd" class="error"></span>
         <button class="button" type="submit" onclick="return chkform()">Sign Up</button>
       </form>
 </div>

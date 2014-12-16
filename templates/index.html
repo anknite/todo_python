@@ -2,6 +2,9 @@ $def with (todos, usrname)
 <!DOCTYPE HTML>
 <html>
 <head>
+<META Http-Equiv="Cache-Control" Content="no-cache"/>
+<META Http-Equiv="Pragma" Content="no-cache"/>
+<META Http-Equiv="Expires" Content="0"/>
 <title>ToDo List</title>
 <style type="text/css">
 .input {
@@ -15,12 +18,10 @@ $def with (todos, usrname)
       }
 </style>
 <script type="text/javascript">
-
-function back_block()
-{
-window.history.foward(1)
-}
-
+function preventBack() 
+{ window.history.forward(1); }
+setTimeout("preventBack()", 0);
+window.onunload = function () { null };
 function chkaddtodo()
 {
      var addtodo=document.getElementById("addtodo").value;
@@ -48,7 +49,7 @@ function chkform()
 }
 </script>
 </head>
-<body onload="back_block()">
+<body>
 <div class="container">
 <h2 class="heading">To Do List</h2>
 <p class="heading">You are logged in as $usrname</p>
@@ -59,7 +60,8 @@ function chkform()
 	<tr>
 	<td>
         <form action="/del/$todo.id" method="post">
-        <input type="checkbox" id="done"/>$todo.title
+        <input type="checkbox" id="done">
+        <label for="done">$todo.title</label>
         <button class="deletebutton" type="submit"></button>
         </form>
         </td>
@@ -68,7 +70,7 @@ function chkform()
 <tr> 
 	<td>     
 	<form action="/index" method="post">
-	<input class="input" type="text" id="addtodo" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" style="float:right;"></span>
+	<input class="input" type="text" id="addtodo" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" class="error"></span>
 	<button class="button" type="submit" onclick="return chkform()">Add Todo</button>
 	</form>
 	</td>

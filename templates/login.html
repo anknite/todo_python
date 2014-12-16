@@ -2,6 +2,9 @@ $def with ()
 <!DOCTYPE HTML>
 <html>
 <head>
+<META Http-Equiv="Cache-Control" Content="no-cache"/>
+<META Http-Equiv="Pragma" Content="no-cache"/>
+<META Http-Equiv="Expires" Content="0"/>
 <title>Sign In</title>
 <script type="text/javascript">
 function isUsername()
@@ -40,7 +43,7 @@ function chkpassword()
    var palt=document.getElementById('pwd');
  if(pawd1.length==0)
   {
-    palt.innerHTML="Password is must";
+    palt.innerHTML="Please enter the password!";
     return false;
   }
   else if(pawd1.length<6 || pawd1.length>12)
@@ -80,8 +83,8 @@ function chkform()
       <form class="form-signin" action="" method="post" align="center">
         <h2 class="form-signin-heading">To Do List</h2>
         <h3 class="form-signin-heading">Please sign in</h3>
-        <input type="text" class="input-block-level" name="uname" id="uname" placeholder="Username" onBlur="isUsername()"><span id="usr" style="float:right; font-size:12px; color:red; margin-top:-10px;"></span>
-        <input type="password" class="input-block-level" name="password" id="password" placeholder="Password" onBlur="chkpassword()"><span id="pwd" style="float:right;font-size:12px; color:red; margin-top:-10px;"></span><br>
+        <input type="text" class="input-block-level" name="uname" id="uname" placeholder="Username" onBlur="isUsername()"><span id="usr" class="error"></span>
+        <input type="password" class="input-block-level" name="password" id="password" placeholder="Password" onBlur="chkpassword()"><span id="pwd" class="error"></span><br>
         <button class="button" type="submit" onclick="return chkform()">Sign in</button>
         <h3 class="form-signin-heading">Not Registered yet?</h3>
         <a href="signup">Sign Up</a>
