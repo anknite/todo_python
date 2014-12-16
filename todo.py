@@ -9,7 +9,6 @@ global context
 urls = (
     '/', 'Login',
     '/signup', 'Signup',
-    '/signup_success','',
     '/index', 'Index',
     '/del/(\d+)', 'Delete',
     '/logout','Logout'
@@ -32,15 +31,19 @@ class Login:
         uname=i.uname
         password=i.password
         """Validate username and password"""
-        chk=model.get_user(uname,password)
-        if chk:
-           session.loggedin=True
-           session.username=uname
-           print "session working fine"+ session.username
-           raise web.seeother('/index')
+        userexists=model.if_user_exists(uname)
+        if userexists:
+           chk=model.get_user(uname,password)
+           if chk:
+                 session.loggedin=True
+                 session.username=uname
+                 raise web.seeother('/index')
+           else:
+                 invalidpassword="<div class=\"container\"><h2 class=\"heading\">To Do List</h2><br><img src=\"http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/blue-metallic-orbs-icons-business/078888-blue-metallic-orb-icon-business-thumbs-down.png\" style=\" height:100px; width:100px;\"></img><br><h3 class=\"errormessage\">Password doesn't match with the entered username!</h3><br><a href=\"/\" class=\"heading\">Try to Login again</a></div>"
+                 return render.base(invalidpassword)
         else:
-           print "Invalid"
-
+            return render.login_fail()
+           
 class Signup:
     
     def GET(self):
@@ -59,18 +62,18 @@ class Signup:
 class Index:
     def GET(self):
         """ Show page """
-        todos = model.get_todos()
-        usrname=session.username
-        session.loggedin=True
-        print "session working fine"+usrname
-        return render.index(todos, usrname)
-
+        if session.get('loggedin')==True:
+           todos = model.get_todos()
+           usrname=session.username
+           return render.index(todos, usrname)
+        else:
+           return web.seeother('/')
+    
     def POST(self):
         """ Add new entry """
         i=web.input()
         newtodo=i.addmore
         usrname=session.username
-        print "session working fine"+usrname
         todos = model.get_todos()
         render.index(todos, usrname)
         model.new_todo(newtodo,usrname)
@@ -86,10 +89,10 @@ class Delete:
 
 class Logout:
    def GET(self):
-        session.loggedin = False
-        session.kill()
-        raise web.seeother('/')
-
+       session.loggedin = False
+       session.kill()
+       return render.login()
+   
 app = web.application(urls, globals())
 
 if web.config.get('_session') is None:
