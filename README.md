@@ -23,7 +23,7 @@ Pre-requisites for your local machine:
 Steps:
 <ol>
 <li>Clone the repo todo_python</li>
-<li>Import the ToDoList.db database in your mysql</li>
+<li>Import the todolist.sql in your mysql by creating a newdatabase and then use command: mysql -u [username] -p newdatabase < [database name].sql</li>
 <li>Go to your projet folder and run todo.py file using command: python todo.py</li>
 <li>Copy the url displayed after running previous command</li>
 <li>Enter it in your browser and you will get a login and signup window.</li>
