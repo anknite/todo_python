@@ -11,13 +11,19 @@ Todo list using python backend and web.py
 <li>Javascript as a front end code</li>
 </ul>
 
-<h3>How to get started with the thid todo list on your local machine?</h3>
+<h3>How to get started with the todo list on your local machine?</h3>
 Pre-requisites for your local machine:
 <ol>
 <li>Python 2.4 and above</li>
 <li><a href="http://webpy.org/">Web.py framework</a></li>
-<li>Mysql server 5.1</li>
-<li>Python bcrypt library(for securely storing and retreiving password)</li>
+<li>Mysql 5.1 and Mysqldb python package using command:sudo apt-get install python-mysqldb</li>
+<li>Python bcrypt library for secured password hashing:</li>
+<ul>
+<ul>
+<li>For Ubuntu,use command: sudo apt-get install python-bcrypt</li>
+<li>For Windows, download zip file from <a href="https://pypi.python.org/pypi/py-bcrypt-w32/0.2.2">here</li>
+</ul>
+</ul>
 </ol>
 
 Steps:
