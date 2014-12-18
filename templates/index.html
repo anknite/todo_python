@@ -22,19 +22,44 @@ function preventBack()
 { window.history.forward(1); }
 setTimeout("preventBack()", 0);
 window.onunload = function () { null };
+
 function chkaddtodo()
 {
-     var addtodo=document.getElementById("addtodo").value;
-     var add=document.getElementById("add");
-     if(addtodo=="")
+     var addtodo1=document.getElementById('addmore').value;
+     var add1=document.getElementById('add');
+     if(addtodo1!="")
      {
-        add.innerHTML="You must enter the todo item!"
+          var check1=document.getElementById('done');
+          var i,flag;
+          for(i=0;i<check1.length;i++)
+          {
+           var chkval=check1[i].value;
+           if(chkval==addtodo1)
+           {
+             flag=0;
+           }
+           else
+           {
+             flag=1;
+           }
+          }
+          if(flag==0)
+          {
+             add1.innerHTML="This todo item already exists!";
+             return false;
+          }
+          else
+          {
+              add1.innerHTML="";
+              return true;
+          }   
+      }
+     else if(addtodo1.length==0)
+     {
+        add1.innerHTML="You must enter the todo item!";
         return false;
      }
-     else
-     {
-        return true;
-     }
+     
 }
 function chkform()
 {
@@ -60,8 +85,7 @@ function chkform()
 	<tr>
 	<td>
         <form action="/del/$todo.id" method="post">
-        <input type="checkbox" id="done">
-        <label for="done">$todo.title</label>
+        <input type="checkbox" id="done" value="$todo.title" onchange="changestatus()">$todo.title
         <button class="deletebutton" type="submit"></button>
         </form>
         </td>
@@ -70,8 +94,8 @@ function chkform()
 <tr> 
 	<td>     
 	<form action="/index" method="post">
-	<input class="input" type="text" id="addtodo" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" class="error"></span>
-	<button class="button" type="submit" onclick="return chkform()">Add Todo</button>
+	<input class="input" type="text" id="addmore" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" class="error"></span>
+	<button class="button" type="submit" onclick="chkform()">Add Todo</button>
 	</form>
 	</td>
 </tr>

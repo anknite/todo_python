@@ -3,6 +3,7 @@ import web
 import model
 import bcrypt
 
+
 web.config.debug = False
 global context
 ### Url mappings
@@ -34,18 +35,14 @@ class Login:
         """Validate username and password"""
         userexists=model.if_user_exists(uname)
         if userexists:
-           chk=model.get_user(uname)
-           for pwd in chk:
-               stored_hash = pwd.password
-               print ""+stored_hash
-           
-           if bcrypt.hashpw(password,stored_hash) == stored_hash:
-              session.loggedin=True
-              session.username=uname
-              raise web.seeother('/index')
+           chk=model.get_user(uname,password)
+           if chk:
+                 session.loggedin=True
+                 session.username=uname
+                 raise web.seeother('/index')
            else:
-              invalidpassword="<div class=\"container\"><h2 class=\"heading\">To Do List</h2><br><img src=\"http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/blue-metallic-orbs-icons-business/078888-blue-metallic-orb-icon-business-thumbs-down.png\" style=\" height:100px; width:100px;\"></img><br><h3 class=\"errormessage\">Password doesn't match with the entered username!</h3><br><a href=\"/\" class=\"heading\">Try to Login again</a></div>"
-           return render.base(invalidpassword)
+                 invalidpassword="<div class=\"container\"><h2 class=\"heading\">To Do List</h2><br><img src=\"http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/blue-metallic-orbs-icons-business/078888-blue-metallic-orb-icon-business-thumbs-down.png\" style=\" height:100px; width:100px;\"></img><br><h3 class=\"errormessage\">Password doesn't match with the entered username!</h3><br><a href=\"/\" class=\"heading\">Try to Login again</a></div>"
+                 return render.base(invalidpassword)
         else:
             return render.login_fail()
            
@@ -57,9 +54,9 @@ class Signup:
     def POST(self):        
         i=web.input()
         uname=i.uname
-        password=i.password
+        password=u'i.password'
         salt = bcrypt.gensalt()
-        password_hashed = bcrypt.hashpw(password,salt)
+        password_hashed = bcrypt.hashpw(password, salt)
         """Insert user details"""
         userexists=model.if_user_exists(uname)
         if userexists:
