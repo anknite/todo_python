@@ -1,6 +1,6 @@
 import web
 
-db = web.database(dbn='mysql', db='ToDoList', user='root', pw='root')
+db = web.database(dbn='mysql', db='todolist', user='root', pw='root')
 def get_user(text1):
     return db.select('users', where="username=$unm", vars={'unm':text1})
     
