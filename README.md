@@ -32,6 +32,8 @@ Steps:
 <li>Import the todolist.sql in your mysql by these two steps below:<ul>
 <li>Create a new database named "todolist"</li>
 <li>Then use command: mysql -u [username] -p todolist < todolist.sql</li></ul>
+<li>Open model.py, change settings according to your database details in db=web.database(dbn='',db='',user='',pw='')
+</li>
 <li>Go to your project folder and run todo.py file using command: python todo.py</li>
 <li>Copy the url displayed after running previous command</li>
 <li>Enter it in your browser and you will get a login and signup window.</li>
