@@ -7,7 +7,7 @@ import web
 ##pw:    password to your mysql
 
 ##Connect to  the database
-db = web.database(dbn='mysql', db='todolist', user='root', pw='root')
+db = web.database(dbn='postgres', db='todolist', user='postgres', pw='root', host='localhost')
 
 """Fetch user details"""
 def get_user(text1):
