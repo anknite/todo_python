@@ -1,22 +1,105 @@
-$def with (todos, form, c1.j)
-<p>You are logged in as $j</p>
+$def with (todos, usrname)
+<!DOCTYPE HTML>
+<html>
+<head>
+<META Http-Equiv="Cache-Control" Content="no-cache"/>
+<META Http-Equiv="Pragma" Content="no-cache"/>
+<META Http-Equiv="Expires" Content="0"/>
+<title>ToDo List</title>
+<style type="text/css">
+.input {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+        width: 250px;
+        float:auto;
+        
+      }
+</style>
+<script type="text/javascript">
+function preventBack() 
+{ window.history.forward(1); }
+setTimeout("preventBack()", 0);
+window.onunload = function () { null };
+
+function chkaddtodo()
+{
+     var addtodo1=document.getElementById('addmore').value;
+     var add1=document.getElementById('add');
+     if(addtodo1!="")
+     {
+          var check1=document.getElementById('done');
+          var i,flag;
+          for(i=0;i<check1.length;i++)
+          {
+           var chkval=check1[i].value;
+           if(chkval==addtodo1)
+           {
+             flag=0;
+           }
+           else
+           {
+             flag=1;
+           }
+          }
+          if(flag==0)
+          {
+             add1.innerHTML="This todo item already exists!";
+             return false;
+          }
+          else
+          {
+              add1.innerHTML="";
+              return true;
+          }   
+      }
+     else if(addtodo1.length==0)
+     {
+        add1.innerHTML="You must enter the todo item!";
+        return false;
+     }
+     
+}
+function chkform()
+{
+   if(chkaddtodo())
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+</script>
+</head>
+<body>
+<div class="container">
+<h2 class="heading">To Do List</h2>
+<p class="heading">You are logged in as <span style="color:#8D1919;">$usrname</span></p>
+<a href="/logout" style="float:right;">logout</a>
+<h4 class="heading" align="left">Things to do: </h4>
 <table>
-    <tr>
-        <th>What to do ?</th>
-        <th></th>
-    </tr>
-$for todo in todos:
-    <tr>
-        <td>$todo.title</td>
-        <td>
-            <form action="/del/$todo.id" method="post">
-                <input type="submit" value="Delete"/>
-            </form>
+    $for todo in todos:
+	<tr>
+	<td>
+        <form action="/del/$todo.id" method="post">
+        <input type="checkbox" id="done" value="$todo.title" onchange="changestatus()"><span for="done">$todo.title</span>
+        <button class="deletebutton" type="submit"></button>
+        </form>
         </td>
-    </tr>    
-</table>  
+	</tr>
 
-<form action="" method="post">
-$:form.render()
-</form>
-
+<tr> 
+	<td>     
+	<form action="/index" method="post">
+	<input class="input" type="text" id="addmore" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" class="error"></span>
+	<button class="button" type="submit" onclick="return chkform()">Add Todo</button>
+	</form>
+	</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

@@ -1,94 +1,125 @@
 $def with ()
 <html>
 <head>
+<META Http-Equiv="Cache-Control" Content="no-cache"/>
+<META Http-Equiv="Pragma" Content="no-cache"/>
+<META Http-Equiv="Expires" Content="0"/>
 <title>Sign Up</title>
-<style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
+<script type="text/javascript">
+function isUsername()
+{
+  var usernam=document.getElementById('uname').value;
+  var usr=document.getElementById('usr');
+  if(usernam!="")
+  {
+ 	if(!usernam.match('^[0-9a-zA-Z._]+'))
+	{
+		usr.innerHTML="Username cannot have special characters!";
+		return false;
+	}
+	
+   	else if(usernam.length<5 || usernam.length>20)
+   	{
+		usr.innerHTML="Username must be between 5-20 characters!";
+		return false;
+   	}
+   	
+	else
+   	{
+		usr.innerHTML="&#10004";
+		return true;
+   	} 
+  }
+  else if(usernam.length==0)
+   {
+	usr.innerHTML="Please enter a Username!";
+	return false;
+   }
+}
 
-      .form-signin {
-        background:url("http://bigdealsasap.com/DesktopModules/TTNVideos/Videos%20and%20Backgrounds/USHBB%20Backgrounds/NotepadBG.png");
-        background-repeat: no-repeat;
-        background-size: 117% 110%;
-        background-position: center center;
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        width:300px;
-        margin: 0 auto;
-        text-align:center;
-        background-color: #fff;
-	border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-       
-      }
-      .form-signin .form-signin-heading,
-      .form-signin .checkbox {
-        margin-bottom: 10px;
-      }
-      .form-signin input[type="text"],
-      .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-        width: 250px;
-        float:auto;
-        
-      }
-      .button {
-   border-top: 1px solid #96d1f8;
-   background: #65a9d7;
-   background: -webkit-gradient(linear, left top, left bottom, from(#100c94), to(#65a9d7));
-   background: -webkit-linear-gradient(top, #100c94, #65a9d7);
-   background: -moz-linear-gradient(top, #100c94, #65a9d7);
-   background: -ms-linear-gradient(top, #100c94, #65a9d7);
-   background: -o-linear-gradient(top, #100c94, #65a9d7);
-   padding: 5px 10px;
-   -webkit-border-radius: 8px;
-   -moz-border-radius: 8px;
-   border-radius: 8px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
-   font-size: 14px;
-   font-family: Georgia, serif;
-   text-decoration: none;
-   vertical-align: middle;
-   }
-.button:hover {
-   border-top-color: #28597a;
-   background: #28597a;
-   color: #ccc;
-   }
-.button:active {
-   border-top-color: #1b435e;
-   background: #1b435e;
-   }
-    </style>
+function chkpassword()
+{
+   var pawd1=document.getElementById('pass').value;
+   var palt=document.getElementById('pwd');
+ if(pawd1.length==0)
+  {
+    palt.innerHTML="Please enter the password!";
+    return false;
+  }
+  else if(pawd1.length<6 || pawd1.length>12)
+  {
+	palt.innerHTML="Password must be between 6-12 characters!";
+        return false;
+  }
+ else
+  {
+    palt.innerHTML="&#10004";
+    return true;
+  }
+}
+
+function confpassword()
+{
+  var pawd=document.getElementById('pass').value;
+  var rpawd=document.getElementById('rpass').value;
+  var pass=document.getElementById('rpwd');
+  
+  if (pawd!=rpawd)
+  {
+     pass.innerHTML="Passwords don't match!";
+     return false;
+  }
+  else if(rpawd=="")
+  {
+     pass.innerHTML="Please re-enter the password!";
+     return false;
+  }
+  else
+  {
+     pass.innerHTML="&#10004";
+     return true;
+  }
+
+}
+
+function chkform()
+ {
+	if(isUsername())
+	{
+		if(chkpassword())
+		{
+			if(confpassword())
+                        {
+ 		 		return true;
+                	}
+ 			else
+			{
+			return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+</script>
 </head>
 <body>
-<div class="container">
-
+<div>
       <form class="form-signin" action="" method="post" align="center">
         <h2 class="form-signin-heading">To Do List</h2>
         <h3 class="form-signin-heading">Please SignUp</h3>
-	<input type="text" class="input-block-level" name="fname" placeholder="First Name">
-	<input type="text" class="input-block-level" name="lname" placeholder="Last Name">
-        <input type="text" class="input-block-level" name="uname" placeholder="Username">
-        <input type="password" class="input-block-level" name="password" placeholder="Password">
-        <input type="password" class="input-block-level" name="rpassword" placeholder="Re-enter Password">
-        <button class="button" type="submit">Sign Up</button>
+        <input type="text" class="input-block-level" name="uname" placeholder="Username" id="uname" onBlur="isUsername()"><span id="usr" class="error"></span>
+        <input type="password" class="input-block-level" name="password" placeholder="Password" id="pass" onBlur="chkpassword()"><span id="pwd" class="error"></span>
+        <input type="password" class="input-block-level" placeholder="Re-enter Password" id="rpass" onBlur="confpassword()"><span id="rpwd" class="error"></span>
+        <button class="button" type="submit" onclick="return chkform()">Sign Up</button>
+        <a href="/login" style="float:right;">Sign In</a>
       </form>
-    </div>
+</div>
 </body>
 </html>

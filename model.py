@@ -7,7 +7,7 @@ import web
 ##pw:    password to your mysql
 
 ##Connect to  the database
-db = web.database(dbn='mysql', db='todolist', user='root', pw='root')
+db = web.database(dbn='postgres', db='d9mdrrf7gijs91', user='rjxrpbrrpgmhtu', pw='UwetWgpH9nfjFgaprsOmu2iCXh', host='ec2-54-83-27-26.compute-1.amazonaws.com', port='5432')
 
 """Fetch user details"""
 def get_user(text1):
@@ -34,8 +34,13 @@ def if_user_exists(text1):
 
 """Fetch todo details"""
 
-def get_todos():
-    return db.select('todo', order='id')
+def get_todos(text1):
+
+    user=db.select('users', where="username=$unm", vars={'unm':text1})
+    for userid in user:
+        uid=userid.u_id
+
+    return db.select('todo',where="u_id=$usr",order='id', vars={'usr':uid})
 
 """Add new todo"""
 

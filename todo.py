@@ -39,7 +39,7 @@ class Login:
                stored_hash = pwd.password
                print ""+stored_hash
            
-           if bcrypt.hashpw(password,stored_hash) == stored_hash:
+           if bcrypt.hashpw(password.encode('utf-8'),stored_hash.encode('utf-8')) == stored_hash.encode('utf-8'):
               session.loggedin=True
               session.username=uname
               raise web.seeother('/index')
@@ -59,22 +59,22 @@ class Signup:
         uname=i.uname
         password=i.password
         salt = bcrypt.gensalt()
-        password_hashed = bcrypt.hashpw(password,salt)
+        password_hashed = bcrypt.hashpw(password.encode('utf-8'),salt.encode('utf-8'))
         """Insert user details"""
         userexists=model.if_user_exists(uname)
         if userexists:
            return render.signup_fail()
         else:
            chk=model.put_user(uname,password_hashed)
-           if chk:
+           if not chk:
               return render.signup_success()
 
 class Index:
     def GET(self):
         """ Show page """
         if session.get('loggedin')==True:
-           todos = model.get_todos()
            usrname=session.username
+           todos = model.get_todos(usrname)
            return render.index(todos, usrname)
         else:
            return web.seeother('/')
@@ -84,7 +84,7 @@ class Index:
         i=web.input()
         newtodo=i.addmore
         usrname=session.username
-        todos = model.get_todos()
+        todos = model.get_todos(usrname)
         render.index(todos, usrname)
         model.new_todo(newtodo,usrname)
         raise web.seeother('/index')

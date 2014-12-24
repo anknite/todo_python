@@ -77,7 +77,7 @@ function chkform()
 <body>
 <div class="container">
 <h2 class="heading">To Do List</h2>
-<p class="heading">You are logged in as $usrname</p>
+<p class="heading">You are logged in as <span style="color:#8D1919;">$usrname</span></p>
 <a href="/logout" style="float:right;">logout</a>
 <h4 class="heading" align="left">Things to do: </h4>
 <table>
@@ -85,7 +85,7 @@ function chkform()
 	<tr>
 	<td>
         <form action="/del/$todo.id" method="post">
-        <input type="checkbox" id="done" value="$todo.title" onchange="changestatus()">$todo.title
+        <input type="checkbox" id="done" value="$todo.title" onchange="changestatus()"><span for="done">$todo.title</span>
         <button class="deletebutton" type="submit"></button>
         </form>
         </td>
@@ -95,7 +95,7 @@ function chkform()
 	<td>     
 	<form action="/index" method="post">
 	<input class="input" type="text" id="addmore" name="addmore" placeholder="I need to" onBlur="chkaddtodo()"><span id="add" class="error"></span>
-	<button class="button" type="submit" onclick="chkform()">Add Todo</button>
+	<button class="button" type="submit" onclick="return chkform()">Add Todo</button>
 	</form>
 	</td>
 </tr>

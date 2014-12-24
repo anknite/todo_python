@@ -9,7 +9,7 @@ $def with ()
       <br>
       <img src="http://www.safevoodoospells.com/images/thumbsup.png" style="height:100px; width:100px;"></img>
       <br>
-      <h3 class="success"> SignUp Successfull!!! </h3>
+      <h3 class="heading"> SignUp Successfull!!! </h3>
       <br>
       <a href="/"> Click here to login </a>
 </div>
