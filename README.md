@@ -7,7 +7,7 @@ Todo list using python backend and web.py
 <ul>
 <li>Python as a backend code</li>
 <li>Web.py framework</li>
-<li>Mysql as a database</li>
+<li>Postgresql as a database.</li>
 <li>Javascript as a front end code</li>
 </ul>
 
@@ -16,7 +16,7 @@ Pre-requisites for your local machine:
 <ol>
 <li>Python 2.4 and above</li>
 <li><a href="http://webpy.org/">Web.py framework</a></li>
-<li>Mysql 5.1 and Mysqldb python package using command:sudo apt-get install python-mysqldb</li>
+<li>Postgresql with <a href="http://initd.org/psycopg/docs/install.html">psycopg2</a> as the python client. </li>
 <li>Python bcrypt library for secured password hashing:</li>
 <ul>
 <ul>
@@ -31,8 +31,8 @@ Steps:
 <li>Clone the repo todo_python</li>
 <li>Import the todolist.sql in your mysql by these two steps below:<ul>
 <li>Create a new database named "todolist"</li>
-<li>Then use command: mysql -u [username] -p todolist < todolist.sql</li></ul>
-<li>Open model.py, change settings according to your database details in db=web.database(dbn='',db='',user='',pw='')
+<li>Import todolist.sql in your database</li></ul>
+<li>Open model.py, change settings according to your database details in db=web.database(dbn='',db='',user='',pw='',host='')
 </li>
 <li>Go to your project folder and run todo.py file using command: python todo.py</li>
 <li>Copy the url displayed after running previous command</li>
